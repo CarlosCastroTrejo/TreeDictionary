@@ -81,7 +81,7 @@ int main()
 		}
 		else 
 		{
-			
+			myTree.Buscar(oracion, myTree.GetRaiz());
 		}
 		cout << endl;
 	}

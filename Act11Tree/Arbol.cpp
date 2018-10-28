@@ -94,6 +94,26 @@ void Arbol::PostOrden(NodoLigado* temp)
 	}
 }
 
+void Arbol::Buscar(string palabra,NodoLigado* temp) 
+{
+	if (temp == NULL)
+	{
+		cout << "La palabra: " << palabra << " NO esta en el diccionario" << endl;
+	}
+	else if (temp->GetDato().compare(palabra) == 0)
+	{
+		cout << "La palabra: " << palabra << " SI esta en el diccionario" << endl;
+	}
+	else if (temp->GetDato().compare(palabra) < 0) // si la palabra es mas grande
+	{
+		Buscar(palabra, temp->GetDerecha());
+	}
+	else if (temp->GetDato().compare(palabra) > 0) // la palabra es mas chica
+	{
+		Buscar(palabra, temp->GetIzquierda());
+	}
+}
+
 Arbol::~Arbol()
 {
 }
