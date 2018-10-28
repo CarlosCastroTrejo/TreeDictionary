@@ -20,7 +20,7 @@ void Arbol::Insertar(string valor, NodoLigado * aux,int linea)
 	}
 	else
 	{
-		if (aux->GetDato().compare(valor)<0) // si la palabra es mas grande
+		if (valor.compare(aux->GetDato())>0) // si la palabra es mas grande
 		{
 			if (aux->GetDerecha() == NULL)
 			{
@@ -33,7 +33,7 @@ void Arbol::Insertar(string valor, NodoLigado * aux,int linea)
 				Insertar(valor, aux->GetDerecha(),linea);
 			}
 		}
-		else if (aux->GetDato().compare(valor)>0) // la palabra es mas chica
+		else if (valor.compare(aux->GetDato())<0) // la palabra es mas chica
 		{
 			if (aux->GetIzquierda() == NULL)
 			{
@@ -46,7 +46,7 @@ void Arbol::Insertar(string valor, NodoLigado * aux,int linea)
 				Insertar(valor, aux->GetIzquierda(),linea);
 			}
 		}
-		else if (aux->GetDato().compare(valor) == 0)  // la palabra es igual
+		else if (valor.compare(aux->GetDato())== 0)  // la palabra es igual
 		{
 			aux->lista.insertaOrden(linea);
 		}
@@ -94,23 +94,81 @@ void Arbol::PostOrden(NodoLigado* temp)
 	}
 }
 
+void Arbol::BorrarDato(string palabra, NodoLigado* temp) 
+{
+	NodoLigado* aux = temp;
+	NodoLigado* antes=temp;
+	bool encontrado = false;
+	while (aux != NULL && !encontrado) 
+	{
+
+		if (palabra.compare(aux->GetDato()) == 0) 
+		{
+			encontrado = true;
+		}
+		else if (palabra.compare(aux->GetDato() )< 0) 
+		{
+			antes = aux;
+			aux = aux->GetIzquierda();
+		}
+		else if (palabra.compare(aux->GetDato())>0)
+		{
+			antes = aux;
+			aux = aux->GetDerecha();
+		}
+	
+	}
+	if (aux->GetDerecha() == NULL && aux->GetIzquierda() == NULL) 
+	{
+		if (antes->GetDerecha() == aux) 
+		{
+			antes->SetDerecha(NULL);
+		}
+		else if (antes->GetIzquierda() == NULL) 
+		{
+			antes->SetIzquierda(NULL);
+		}
+	}
+	else if (aux->GetDerecha() == NULL && aux->GetIzquierda() != NULL) 
+	{
+		NodoLigado* mayor= aux;
+		BuscarMayor(aux->GetDato(), aux, mayor);
+	}
+	else if (aux->GetDerecha() != NULL && aux->GetIzquierda() == NULL)
+	{
+
+	}
+	else if (aux->GetDerecha() != NULL && aux->GetIzquierda() != NULL)
+	{
+
+	}
+	numeroPalabras--;
+}
+
+void Arbol::BuscarMayor(string palabra, NodoLigado* temp, NodoLigado* mayor)
+{
+	
+}
+
+
+
 void Arbol::Buscar(string palabra,NodoLigado* temp) 
 {
-	if (temp == NULL)
+	if (temp == NULL) 
 	{
-		cout << "La palabra: " << palabra << " NO esta en el diccionario" << endl;
+		cout << "La palabra "+palabra+" NO esta en el diccionario" << endl;
 	}
-	else if (temp->GetDato().compare(palabra) == 0)
+	if (palabra.compare(temp->GetDato()) == 0)
 	{
-		cout << "La palabra: " << palabra << " SI esta en el diccionario" << endl;
+		cout << "La palabra " + palabra + " SI esta en el diccionario" << endl;
 	}
-	else if (temp->GetDato().compare(palabra) < 0) // si la palabra es mas grande
-	{
-		Buscar(palabra, temp->GetDerecha());
-	}
-	else if (temp->GetDato().compare(palabra) > 0) // la palabra es mas chica
+	else if (palabra.compare(temp->GetDato()) < 0)
 	{
 		Buscar(palabra, temp->GetIzquierda());
+	}
+	else if(palabra.compare(temp->GetDato()) > 0)
+	{
+		Buscar(palabra, temp->GetDerecha());
 	}
 }
 

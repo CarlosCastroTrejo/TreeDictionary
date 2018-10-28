@@ -64,7 +64,8 @@ int main()
 		getline(cin,oracion);
 		if (oracion[0] == 'D') 
 		{
-		
+			palabra = oracion.substr(2, oracion.length() - 1);
+			myTree.BorrarDato(palabra,myTree.GetRaiz());
 		}
 		else if (oracion[0] == 'M')
 		{

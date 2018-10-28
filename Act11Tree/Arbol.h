@@ -14,6 +14,8 @@ public:
 	void PreOrden(NodoLigado*);
 	void PostOrden(NodoLigado*);
 	void Buscar(string,NodoLigado*);
+	void BuscarMayor(string, NodoLigado*, NodoLigado*);
+	void BorrarDato(string, NodoLigado*);
 	int GetNumeroDePalabras();
 
 	NodoLigado* GetRaiz();
