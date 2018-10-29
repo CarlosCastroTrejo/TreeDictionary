@@ -123,19 +123,43 @@ void Arbol::BorrarDato(string palabra, NodoLigado* temp)
 		if (antes->GetDerecha() == aux) 
 		{
 			antes->SetDerecha(NULL);
+			delete aux;
 		}
-		else if (antes->GetIzquierda() == NULL) 
+		else if (antes->GetIzquierda() == aux) 
 		{
 			antes->SetIzquierda(NULL);
+			delete aux;
 		}
 	}
 	else if (aux->GetDerecha() == NULL && aux->GetIzquierda() != NULL) 
 	{
-		NodoLigado* mayor= aux;
-		BuscarMayor(aux->GetDato(), aux, mayor);
+		if (antes->GetDerecha() == aux)
+		{
+			antes->SetDerecha(aux->GetIzquierda());
+			aux = NULL;
+			delete aux;
+		}
+		else if (antes->GetIzquierda() == aux)
+		{
+			antes->SetIzquierda(aux->GetIzquierda());
+			aux = NULL;
+			delete aux;
+		}
 	}
 	else if (aux->GetDerecha() != NULL && aux->GetIzquierda() == NULL)
 	{
+		if (antes->GetDerecha() == aux)
+		{
+			antes->SetDerecha(aux->GetDerecha());
+			aux = NULL;
+			delete aux;
+		}
+		else if (antes->GetIzquierda() == aux)
+		{
+			antes->SetIzquierda(aux->GetDerecha());
+			aux = NULL;
+			delete aux;
+		}
 
 	}
 	else if (aux->GetDerecha() != NULL && aux->GetIzquierda() != NULL)
@@ -145,30 +169,27 @@ void Arbol::BorrarDato(string palabra, NodoLigado* temp)
 	numeroPalabras--;
 }
 
-void Arbol::BuscarMayor(string palabra, NodoLigado* temp, NodoLigado* mayor)
-{
-	
-}
+
 
 
 
 void Arbol::Buscar(string palabra,NodoLigado* temp) 
 {
-	if (temp == NULL) 
+	if (temp == NULL)
 	{
-		cout << "La palabra "+palabra+" NO esta en el diccionario" << endl;
+		cout << "La palabra: " << palabra << " NO esta en el diccionario" << endl;
 	}
-	if (palabra.compare(temp->GetDato()) == 0)
+	else if (temp->GetDato().compare(palabra) == 0)
 	{
-		cout << "La palabra " + palabra + " SI esta en el diccionario" << endl;
+		cout << "La palabra: " << palabra << " SI esta en el diccionario" << endl;
 	}
-	else if (palabra.compare(temp->GetDato()) < 0)
-	{
-		Buscar(palabra, temp->GetIzquierda());
-	}
-	else if(palabra.compare(temp->GetDato()) > 0)
+	else if (temp->GetDato().compare(palabra) < 0) // si la palabra es mas grande
 	{
 		Buscar(palabra, temp->GetDerecha());
+	}
+	else if (temp->GetDato().compare(palabra) > 0) // la palabra es mas chica
+	{
+		Buscar(palabra, temp->GetIzquierda());
 	}
 }
 
