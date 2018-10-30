@@ -43,7 +43,7 @@ int main()
 					{
 						palabra.erase(palabra.length()-1);
 					}
-					if (palabra.length() >=3) 
+					if (palabra.length() >3) 
 					{
 						myTree.Insertar(palabra, myTree.GetRaiz(),linea);
 					}

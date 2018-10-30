@@ -97,28 +97,50 @@ void Arbol::PostOrden(NodoLigado* temp)
 void Arbol::BorrarDato(string palabra, NodoLigado* temp) 
 {
 	NodoLigado* aux = temp;
-	NodoLigado* antes=temp;
+	NodoLigado* antes= temp;
 	bool encontrado = false;
-	while (aux != NULL && !encontrado) 
+	while (aux != NULL && !encontrado)
 	{
 
-		if (palabra.compare(aux->GetDato()) == 0) 
+		if (palabra.compare(aux->GetDato()) == 0)
 		{
 			encontrado = true;
 		}
-		else if (palabra.compare(aux->GetDato() )< 0) 
+		else if (palabra.compare(aux->GetDato()) < 0)
 		{
 			antes = aux;
 			aux = aux->GetIzquierda();
 		}
-		else if (palabra.compare(aux->GetDato())>0)
+		else if (palabra.compare(aux->GetDato()) > 0)
 		{
 			antes = aux;
 			aux = aux->GetDerecha();
 		}
-	
 	}
-	if (aux->GetDerecha() == NULL && aux->GetIzquierda() == NULL) 
+	if (aux == NULL)
+	{
+		cout << "No existe" << endl;
+	}
+	else if (aux==raiz) //Si es raiz
+	{
+		if (aux->GetDerecha() == NULL && aux->GetIzquierda()==NULL) 
+		{
+			raiz = NULL;
+		}
+		else if (aux->GetDerecha() != NULL && aux->GetIzquierda() == NULL) 
+		{
+			raiz = aux->GetDerecha();
+		}
+		else if (aux->GetDerecha() == NULL && aux->GetIzquierda() != NULL)
+		{
+			raiz = aux->GetIzquierda();
+		}
+		else if (aux->GetDerecha() != NULL && aux->GetIzquierda() != NULL)
+		{
+			
+		}
+	}
+	else if (aux->GetDerecha() == NULL && aux->GetIzquierda() == NULL) 
 	{
 		if (antes->GetDerecha() == aux) 
 		{
@@ -164,13 +186,55 @@ void Arbol::BorrarDato(string palabra, NodoLigado* temp)
 	}
 	else if (aux->GetDerecha() != NULL && aux->GetIzquierda() != NULL)
 	{
+		NodoLigado* aux2 = aux->GetDerecha();
+		NodoLigado* antes2 = aux->GetDerecha();
 
+		while (aux2->GetIzquierda() != NULL)
+		{
+			antes2 = aux2;
+			aux2 = aux2->GetIzquierda();
+		}
+
+
+		if (antes->GetIzquierda() == aux) 
+		{
+			if (aux2->GetDerecha() == NULL)
+			{
+				aux2->SetIzquierda(aux->GetIzquierda());
+				aux2->SetDerecha(aux->GetDerecha());
+				antes->SetIzquierda(aux2);
+				antes2->SetIzquierda(NULL);
+			}
+			else
+			{
+				antes2->SetIzquierda(aux2->GetDerecha());
+				aux2->SetIzquierda(aux->GetIzquierda());
+				aux2->SetDerecha(aux->GetDerecha());
+				antes->SetIzquierda(aux2);
+			}
+		}
+		else if (antes->GetDerecha() == aux) 
+		{
+		
+			if (aux2->GetDerecha() == NULL)
+			{
+				aux2->SetIzquierda(aux->GetIzquierda());
+				aux2->SetDerecha(aux->GetDerecha());
+				antes->SetDerecha(aux2);
+				antes2->SetIzquierda(NULL);
+			}
+			else
+			{
+				
+				antes2->SetIzquierda(aux2->GetDerecha());
+				aux2->SetIzquierda(aux->GetIzquierda());
+				aux2->SetDerecha(aux->GetDerecha());
+				antes->SetDerecha(aux2);
+			}
+		}
 	}
 	numeroPalabras--;
 }
-
-
-
 
 
 void Arbol::Buscar(string palabra,NodoLigado* temp) 
@@ -182,6 +246,7 @@ void Arbol::Buscar(string palabra,NodoLigado* temp)
 	else if (temp->GetDato().compare(palabra) == 0)
 	{
 		cout << "La palabra: " << palabra << " SI esta en el diccionario" << endl;
+		cout << temp->GetDato() << " " << temp->GetLista() << endl;
 	}
 	else if (temp->GetDato().compare(palabra) < 0) // si la palabra es mas grande
 	{
