@@ -137,7 +137,30 @@ void Arbol::BorrarDato(string palabra, NodoLigado* temp)
 		}
 		else if (aux->GetDerecha() != NULL && aux->GetIzquierda() != NULL)
 		{
+			NodoLigado* aux2 = aux->GetDerecha();
+			NodoLigado* antes2 = aux->GetDerecha();
+			while (aux2->GetIzquierda() != NULL)
+			{
+				antes2 = aux2;
+				aux2 = aux2->GetIzquierda();
+			}
 			
+
+				if (aux2->GetDerecha() == NULL)
+				{
+					aux2->SetIzquierda(aux->GetIzquierda());
+					aux2->SetDerecha(aux->GetDerecha());
+					raiz = aux2;
+					antes2->SetIzquierda(NULL);
+				}
+				else
+				{
+					antes2->SetIzquierda(aux2->GetDerecha());
+					aux2->SetIzquierda(aux->GetIzquierda());
+					aux2->SetDerecha(aux->GetDerecha());
+					raiz= aux2;
+				}
+		
 		}
 	}
 	else if (aux->GetDerecha() == NULL && aux->GetIzquierda() == NULL) 
@@ -194,8 +217,6 @@ void Arbol::BorrarDato(string palabra, NodoLigado* temp)
 			antes2 = aux2;
 			aux2 = aux2->GetIzquierda();
 		}
-
-
 		if (antes->GetIzquierda() == aux) 
 		{
 			if (aux2->GetDerecha() == NULL)

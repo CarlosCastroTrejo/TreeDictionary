@@ -1,3 +1,8 @@
+// Actividad 11
+// Proyecto con el objetivo de crear un dicconario a traves de un archivo de texto e implementado en un arbol como estructura de datos
+// Carlos Emiliano Castro Trejo A01422062
+// Jorge Romero Romanis A01423263
+
 #include "NodoLigado.h"
 #include"Arbol.h"
 #include <string>
@@ -43,7 +48,7 @@ int main()
 					{
 						palabra.erase(palabra.length()-1);
 					}
-					if (palabra.length() >3) 
+					if (palabra.length() >3 && palabra[0]>65) 
 					{
 						myTree.Insertar(palabra, myTree.GetRaiz(),linea);
 					}
@@ -56,7 +61,7 @@ int main()
 		}
 		archivo.close();
 	}
-	myTree.InOrder(myTree.GetRaiz());
+	myTree.PreOrden(myTree.GetRaiz());
 	cout << endl;
 	while (oracion != "F")
 	{
@@ -69,7 +74,7 @@ int main()
 		}
 		else if (oracion[0] == 'M')
 		{
-			myTree.InOrder(myTree.GetRaiz());
+			myTree.PreOrden(myTree.GetRaiz());
 		}
 		else if (oracion[0] == 'C') 
 		{
